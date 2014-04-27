@@ -17,6 +17,7 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -149,9 +150,8 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        MenuTrabajador verVentanaTrabajadores = new MenuTrabajador();
-
-        verVentanaTrabajadores.setVisible(true);
+        InicioSesionTrabajador m = new InicioSesionTrabajador();
+        m.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 

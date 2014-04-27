@@ -28,6 +28,8 @@ public class MenuTrabajador extends javax.swing.JFrame {
         conn = Conectar.getConnection();
         this.setLocationRelativeTo(null);
         Desabilitar();
+        PedidoEntregado();
+        PedidoPendiente();
     }
     void Limpiar(){
         txtCoPedido.setText("");
@@ -42,8 +44,8 @@ public class MenuTrabajador extends javax.swing.JFrame {
         btnNoEntregado.setEnabled(true);
         btnPedEntregado.setEnabled(true);
         btnPedPendiente.setEnabled(true);
-        jTable1.setEnabled(true);
-        jTable2.setEnabled(true);
+        TaEntre.setEnabled(true);
+        PedPendiente.setEnabled(true);
         
         
     }
@@ -54,11 +56,63 @@ public class MenuTrabajador extends javax.swing.JFrame {
         btnNoEntregado.setEnabled(false);
         btnPedEntregado.setEnabled(false);
         btnPedPendiente.setEnabled(false);
-        jTable1.setEnabled(false);
-        jTable2.setEnabled(false);
+        TaEntre.setEnabled(false);
+        PedPendiente.setEnabled(false);
+
+    }
+    void DesabilitarUsuario(){
+        txtUsuTrabajador.setEnabled(false);
+        txtConTrabajador.setEnabled(false);
+    }
+    void PedidoEntregado(){
+        String [] titulos = {"Pedidos Entregados"};
+        String sql = "Select * from Pedido_entregado";
+        model = new DefaultTableModel(null, titulos);
         
+        Conectar cc = new Conectar();
+        Connection cn = cc.getConnection();
         
+        try {
+            conn = Conectar.getConnection();
+            model = new DefaultTableModel(null, titulos);
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            
+            String [] fila = new String [1];
+            
+            while (rs.next()){
+                fila[0] = rs.getString("codigo");
+                model.addRow(fila);
+            }
+            TaEntre.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    void PedidoPendiente(){
+        String [] titulos = {"Pedidos Pendientes"};
+        String sql = "Select * from pedido_pendiente";
+        model = new DefaultTableModel(null, titulos);
         
+        Conectar cc = new Conectar();
+        Connection cn = cc.getConnection();
+        
+        try {
+            conn = Conectar.getConnection();
+            model = new DefaultTableModel(null, titulos);
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            
+            String [] fila = new String [1];
+            
+            while (rs.next()){
+                fila[0] = rs.getString("codigo");
+                model.addRow(fila);
+            }
+            PedPendiente.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -80,7 +134,7 @@ public class MenuTrabajador extends javax.swing.JFrame {
         btnPedPendiente = new javax.swing.JButton();
         jSeparator13 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TaEntre = new javax.swing.JTable();
         jSeparator14 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         txtCoPedido = new javax.swing.JTextField();
@@ -89,7 +143,7 @@ public class MenuTrabajador extends javax.swing.JFrame {
         jSeparator15 = new javax.swing.JSeparator();
         btnPedEntregado = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        PedPendiente = new javax.swing.JTable();
         jLabel51 = new javax.swing.JLabel();
         txtUsuTrabajador = new javax.swing.JTextField();
         txtConTrabajador = new javax.swing.JPasswordField();
@@ -117,57 +171,61 @@ public class MenuTrabajador extends javax.swing.JFrame {
         });
 
         btnPedPendiente.setText("Pedidos Pendiente");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Pedidos Entregados", "", "", ""
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                true, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        btnPedPendiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPedPendienteActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+
+        TaEntre.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(TaEntre);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Codigo Pedido");
 
         btnEntregado.setText("Entregado");
-
-        btnNoEntregado.setText("No Entregado");
-
-        btnPedEntregado.setText("Pedidos Entregados");
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Pedidos Pendientes", "", "", ""
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                true, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        btnEntregado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntregadoActionPerformed(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+
+        btnNoEntregado.setText("No Entregado");
+        btnNoEntregado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNoEntregadoActionPerformed(evt);
+            }
+        });
+
+        btnPedEntregado.setText("Pedidos Entregados");
+        btnPedEntregado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPedEntregadoActionPerformed(evt);
+            }
+        });
+
+        PedPendiente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(PedPendiente);
 
         jLabel51.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel51.setText("Usuario Trabajador: ");
@@ -186,9 +244,9 @@ public class MenuTrabajador extends javax.swing.JFrame {
                         .addComponent(jSeparator14)
                         .addComponent(jSeparator12)
                         .addGroup(jPanel13Layout.createSequentialGroup()
-                            .addGap(39, 39, 39)
+                            .addGap(25, 25, 25)
                             .addComponent(btnPedPendiente)
-                            .addGap(18, 18, 18)
+                            .addGap(32, 32, 32)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel13Layout.createSequentialGroup()
                             .addGap(23, 23, 23)
@@ -261,7 +319,7 @@ public class MenuTrabajador extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
+                        .addGap(50, 50, 50)
                         .addComponent(btnPedPendiente)))
                 .addGap(33, 33, 33))
         );
@@ -340,6 +398,7 @@ public class MenuTrabajador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Bienvenido a la Feria Movil, Que tengas un buen dia");
                 Limpiar();
                 Habilitar();
+                DesabilitarUsuario();
 
             }else{
                 JOptionPane.showMessageDialog(null, "USUARIO NO VALIDO");
@@ -355,8 +414,89 @@ public class MenuTrabajador extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        Menu m = new Menu();
+        m.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnEntregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregadoActionPerformed
+        // TODO add your handling code here:
+        Conectar cc = new Conectar();
+        conn = Conectar.getConnection();
+        
+        
+        String codigo;
+        String sql = "";
+        
+        codigo = txtCoPedido.getText();
+        
+        sql = "INSERT INTO pedido_entregado (codigo) VALUES (?)";
+        
+        
+        try {
+            PreparedStatement ps=conn.prepareStatement(sql);
+            ps.setString(1, codigo);
+            System.out.println(sql);
+            
+            int n = ps.executeUpdate();
+            
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Entregado");
+                Limpiar();
+                
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"NO SE GUARDO EN LOS PEDIDOS");
+            Limpiar();
+        }
+        
+    }//GEN-LAST:event_btnEntregadoActionPerformed
+
+    private void btnPedEntregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedEntregadoActionPerformed
+        // TODO add your handling code here:
+        
+        PedidoEntregado();
+        
+    }//GEN-LAST:event_btnPedEntregadoActionPerformed
+
+    private void btnNoEntregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoEntregadoActionPerformed
+        // TODO add your handling code here:
+        Conectar cc = new Conectar();
+        conn = Conectar.getConnection();
+        
+        
+        String codigo;
+        String sql = "";
+        
+        codigo = txtCoPedido.getText();
+        
+        sql = "INSERT INTO pedido_pendiente (codigo) VALUES (?)";
+        
+        
+        try {
+            PreparedStatement ps=conn.prepareStatement(sql);
+            ps.setString(1, codigo);
+            System.out.println(sql);
+            
+            int n = ps.executeUpdate();
+            
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Pedido Pendiente");
+                Limpiar();
+                
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"NO SE GUARDO EN LOS PEDIDOS PENDIENTES");
+            Limpiar();
+        }
+    }//GEN-LAST:event_btnNoEntregadoActionPerformed
+
+    private void btnPedPendienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedPendienteActionPerformed
+        // TODO add your handling code here:
+        PedidoPendiente();
+    }//GEN-LAST:event_btnPedPendienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -394,6 +534,8 @@ public class MenuTrabajador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable PedPendiente;
+    private javax.swing.JTable TaEntre;
     private javax.swing.JButton btnEntregado;
     private javax.swing.JButton btnIngresarTrabajador;
     private javax.swing.JButton btnNoEntregado;
@@ -413,8 +555,6 @@ public class MenuTrabajador extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator14;
     private javax.swing.JSeparator jSeparator15;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField txtCoPedido;
     private javax.swing.JPasswordField txtConTrabajador;
     private javax.swing.JTextField txtUsuTrabajador;

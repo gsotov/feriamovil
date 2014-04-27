@@ -5,19 +5,22 @@
  */
 
 package Ventanas;
+import BD.Conectar;
+import java.sql.Connection;
 
 /**
  *
  * @author Gabriel
  */
 public class Menu extends javax.swing.JFrame {
-
+    Connection conn;
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
+        conn = Conectar.getConnection();
     }
 
     /**

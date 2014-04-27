@@ -162,8 +162,8 @@ public class InicioSesionCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             conn = Conectar.getConnection();
-            String usuario = this.txtUsuario.getText();
-            String contraseña = this.txtContraseña.getText();
+            String usuario = this.txtUsuario5.getText();
+            String contraseña = this.txtContraseña5.getText();
             String sql = "Select count(*) as cuenta from usuario where usuario='" + usuario + "' and contraseña='" + contraseña + "'";
             sent = conn.createStatement();
             ResultSet rs = sent.executeQuery(sql);

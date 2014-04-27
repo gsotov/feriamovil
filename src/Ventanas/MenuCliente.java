@@ -6,17 +6,22 @@
 
 package Ventanas;
 
+import BD.Conectar;
+import java.sql.Connection;
+
 /**
  *
  * @author Gabriel
  */
 public class MenuCliente extends javax.swing.JFrame {
-
+    Connection conn;
     /**
      * Creates new form MenuCliente
      */
     public MenuCliente() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        conn = Conectar.getConnection();
     }
 
     /**
@@ -102,6 +107,8 @@ public class MenuCliente extends javax.swing.JFrame {
 
     private void btnVoler4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoler4ActionPerformed
         // TODO add your handling code here:
+        Menu m = new Menu();
+        m.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVoler4ActionPerformed
 

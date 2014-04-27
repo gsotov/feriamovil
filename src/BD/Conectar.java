@@ -23,7 +23,7 @@ public class Conectar {
         try{
          Class.forName("com.mysql.jdbc.Driver");
             Conn = DriverManager.getConnection(url, user, pass);
-            JOptionPane.showMessageDialog(null,"Conectada");
+            
             
         }catch(Exception e) {
             
